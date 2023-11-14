@@ -78,6 +78,12 @@ platform:
 {% if prov_dhcp_range is defined and prov_dhcp_range|length %}
     provisioningDHCPRange: {{ prov_dhcp_range }}
 {% endif %}    
+{% if not (enable_redfish | default(False) | bool) %}
+{% if ((release_version.split('.')[0]|int == 4) and (release_version.split('.')[1]|int == 6)) %}
+    provisioningHostIP: {{ provisioningHostIP }}
+{% endif %}
+    bootstrapProvisioningIP: {{ bootstrapProvisioningIP }}
+{% endif %}
 {% if externalMACAddress is defined and externalMACAddress|length %}
     externalMACAddress: '{{ externalMACAddress }}'
 {% endif %}
